@@ -1,16 +1,55 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mess Wala - Admin Login</title>
+  <title>Mess Wala - Admin Panel</title>
 </head>
 <body>
-  <h2>Admin Login</h2>
-  <form>
-    <label>Email: </label><input type="email"><br><br>
-    <label>Password: </label><input type="password"><br><br>
-    <button type="submit">Login</button>
+  <h2>Admin Panel</h2>
+
+  <form id="menuForm">
+    <label>Date: </label>
+    <input type="date" id="date" required><br><br>
+
+    <label>Menu: </label>
+    <input type="text" id="menu" placeholder="Chapati, Rice, Dal..." required><br><br>
+
+    <button type="submit">Upload Menu</button>
   </form>
+
+  <p id="status"></p>
   <p><a href="index.html">⬅ Back to Home</a></p>
-</body>
-</html>
+
+  <script>
+    const apiUrl = "https://sheetdb.io/api/v1/mitant1amc5l5"; // replace with your API
+
+    document.getElementById("menuForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      let date = document.getElementById("date").value;
+      let menu = document.getElementById("menu").value;
+
+      let data = {
+        data: [
+          { Date: date, Menu: menu }
+        ]
+      };
+
+      try {
+        let res = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          document.getElementById("status").innerText = "✅ Menu uploaded successfully!";
+        } else {
+          document.getElementById("status").innerText = "❌ Error uploading menu!";
+        }
+      } catch (err) {
+        document.getElementById("status").innerText = "⚠️ Network error!";
+      }
+    });
+  </sc
+
