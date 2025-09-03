@@ -15,23 +15,44 @@
   <hr>
 
   <h2>Choose Your Plan</h2>
-  <ul>
-    <li>🍴 One Time Tiffin - ₹1500/month</li>
-    <li>🍴 Two Time Tiffin - ₹2800/month</li>
-    <li>🍴 Single Tiffin - ₹80</li>
-  </ul>
+  <input type="radio" name="plan" value="1500"> 🍴 One Time Tiffin - ₹1500/month <br>
+  <input type="radio" name="plan" value="2800"> 🍴 Two Time Tiffin - ₹2800/month <br>
+  <input type="radio" name="plan" value="80"> 🍴 Single Tiffin - ₹80 <br>
 
   <h3>Extras</h3>
-  <p>Carry Bag / Dish: +₹10</p>
+  <input type="checkbox" id="extra" value="10"> Carry Bag / Dish (+₹10) <br><br>
 
   <h3>Payment Options</h3>
-  <button onclick="payUPI()">Pay Online (UPI)</button>
-  <button onclick="alert('Your order has been placed with Cash on Delivery!')">Cash on Delivery</button>
+  <button type="button" onclick="payUPI()">Pay Online (UPI)</button>
+  <button type="button" onclick="alert('✅ Order placed with Cash on Delivery!')">Cash on Delivery</button>
 
   <p><a href="index.html">⬅ Back to Home</a></p>
 
   <script>
     function payUPI() {
-      // Replace with your UPI ID
-      window.location.href = "upi://pay?pa=yourupiid@upi&pn=MessWala&mc=0000&tid=123456&tr=654321&tn=Mess%20Wala%20Pa
+      let plans = document.getElementsByName("plan");
+      let amount = 0;
+      for (let p of plans) {
+        if (p.checked) {
+          amount = parseInt(p.value);
+        }
+      }
 
+      // add extra if checked
+      if (document.getElementById("extra").checked) {
+        amount += 10;
+      }
+
+      if (amount === 0) {
+        alert("⚠️ Please select a plan first!");
+        return;
+      }
+
+      // Replace with your UPI ID
+      let upiID = "yourupiid@upi";
+      let url = `upi://pay?pa=${upiID}&pn=MessWala&am=${amount}&cu=INR&tn=Mess%20Wala%20Tiffin`;
+      window.location.href = url;
+    }
+  </script>
+</body>
+</html>
