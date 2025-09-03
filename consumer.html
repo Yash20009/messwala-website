@@ -24,8 +24,14 @@
   <h3>Extras</h3>
   <p>Carry Bag / Dish: +₹10</p>
 
-  <button>Subscribe Now</button>
+  <h3>Payment Options</h3>
+  <button onclick="payUPI()">Pay Online (UPI)</button>
+  <button onclick="alert('Your order has been placed with Cash on Delivery!')">Cash on Delivery</button>
+
   <p><a href="index.html">⬅ Back to Home</a></p>
-</body>
-</html>
+
+  <script>
+    function payUPI() {
+      // Replace with your UPI ID
+      window.location.href = "upi://pay?pa=yourupiid@upi&pn=MessWala&mc=0000&tid=123456&tr=654321&tn=Mess%20Wala%20Pa
 
