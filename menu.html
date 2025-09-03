@@ -6,12 +6,35 @@
 </head>
 <body>
   <h2>Today’s Menu 🍴</h2>
-  <ul>
-    <li>Chapati</li>
-    <li>Paneer Curry</li>
-    <li>Rice</li>
-    <li>Dal</li>
-  </ul>
+  <div id="menu">Loading menu...</div>
+
   <p><a href="index.html">⬅ Back to Home</a></p>
+
+  <script>
+    // Replace with your SheetDB API link
+    const apiUrl = "https://sheetdb.io/api/v1/mitant1amc5l5";
+
+    async function loadMenu() {
+      try {
+        let res = await fetch(apiUrl);
+        let data = await res.json();
+
+        // get today’s date (yyyy-mm-dd)
+        let today = new Date().toISOString().split("T")[0];
+        let todayMenu = data.find(row => row.Date === today);
+
+        if (todayMenu) {
+          document.getElementById("menu").innerText = todayMenu.Menu;
+        } else {
+          document.getElementById("menu").innerText = "No menu uploaded for today.";
+        }
+      } catch (err) {
+        document.getElementById("menu").innerText = "Error loading menu!";
+      }
+    }
+
+    loadMenu();
+  </script>
 </body>
 </html>
+
